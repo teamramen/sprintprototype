@@ -45,9 +45,5 @@ public class testClass {
 		case 2:
 			break;
 		}
-		//validate module name
-		//Scanner fsc = new Scanner(new File());
-		
-		
 	}
 }
