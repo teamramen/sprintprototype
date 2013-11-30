@@ -1,0 +1,5 @@
+Gene,123456G,Male,22
+Ian,098765I,Male,22
+Joe,456789J,Male,22
+WenBing,346790W,Female,20
+YuanHui,124578Y,Female,21
