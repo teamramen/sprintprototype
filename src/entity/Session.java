@@ -1,12 +1,17 @@
 package entity;
 
-import java.util.ArrayList;
-
 public class Session {
 	
 	private String sessionName;
+	private String sessionType; //lab, tutorial, lecture
+	private boolean present;
 	
-	private ArrayList<Student> listOfStudent = new ArrayList<Student>();
+	public Session(String sessionName, String sessionType, boolean present)
+	{
+		this.sessionName = sessionName;
+		this.sessionType = sessionType;
+		this.present = present;
+	}
 	
 	public String getSessionName()
 	{
@@ -18,14 +23,21 @@ public class Session {
 		this.sessionName = sessionName;
 	}
 	
-	public ArrayList<Student> getStudents()
+	public String getSessionType()
 	{
-		return listOfStudent;
+		return this.sessionType;
 	}
 	
-	public void setStudents(ArrayList<Student> students)
+	public void setSessionType(String sessionType)
 	{
-		listOfStudent = students;
+		this.sessionType = sessionType;
+	}
+	
+	public boolean isPresent() {
+		return present;
 	}
 
+	public void setPresent(boolean present) {
+		this.present = present;
+	}
 }

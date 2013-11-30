@@ -7,21 +7,16 @@ public class Student {
 	private String matric;
 	private String gender;
 	private String age;
-	private Attendance attendance;
 
 	ArrayList<Grades> grade = new ArrayList<Grades>();
 	ArrayList<Course> course = new ArrayList<Course>();
+	ArrayList<Session> session = new ArrayList<Session>();
 	
 	public Student(String name, String matric, String gender, String age) {
 		this.name = name;
 		this.matric = matric;
 		this.gender = gender;
 		this.age = age;
-	}
-	
-	public Attendance getAttendance()
-	{
-		return this.attendance;
 	}
 	
 	public void setAge(String age)
@@ -66,6 +61,16 @@ public class Student {
 	public void setCourse(ArrayList<Course> course)
 	{
 		this.course = course;
+	}
+	
+	public ArrayList<Session> getSession()
+	{
+		return this.session;
+	}
+
+	public void setSession(ArrayList<Session> session)
+	{
+		this.session = session;
 	}
 	
 	public String getName() {

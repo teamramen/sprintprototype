@@ -1,3 +1,5 @@
+package entity;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,12 +16,46 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Function {
 	private static Student s;
-	private static Grades g;
 	private static Course c;
+	public static ArrayList<Student> student;
+	public static ArrayList<Grades> alJ;
 
-	public static void tranScript() throws IOException {
+	public static int selectStudentTranscript() throws IOException {
+		int option = -1;
+		System.out.println("Select Student to print Transcript");
+		System.out.println(0 + " Print All Student Transcript");
 
-		BufferedWriter f = new BufferedWriter(new FileWriter("transcript.txt"));
+		try {
+			for (int i = 1; i < student.size(); i++) {
+				System.out.println(i + " " + student.get(i).getName());
+
+			}
+
+		} catch (NullPointerException e) {
+			System.out.println("No Data input!\n");
+			showMenu();
+		}
+
+		Scanner s = new Scanner(System.in);
+
+		try {
+			option = s.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("Only numbers are allowed!\n");
+		}
+
+		System.out.println(option);
+		if (option > student.size()) {
+			System.out.println("Invalid ID key in again");
+			selectStudentTranscript();
+		}
+		return option;
+	}
+
+	public static void tranScript(int id) throws IOException {
+
+		BufferedWriter f = new BufferedWriter(new FileWriter(student.get(id)
+				.getName() + "_" + student.get(id).getMatric()));
 
 		f.write("===================================================================");
 		f.newLine();
@@ -32,8 +68,15 @@ public class Function {
 					+ "                                    " + "||");
 			f.newLine();
 		}
-		f.write("||Student Id Number: 214121Y"
-				+ "                                     " + "||");
+		int nameLength = student.get(id).getName().length();
+		int computeLength = 19 - nameLength;
+
+		f.write("||Student Id Number: " + student.get(id).getMatric()
+				+ "     Student Name:" + student.get(id).getName());
+		for (int i = 0; i < computeLength; i++) {
+			f.write(" ");
+		}
+		f.write("||");
 		f.newLine();
 		f.write("||Degree in Computer Science "
 				+ "                                    " + "||");
@@ -42,38 +85,42 @@ public class Function {
 				+ "||");
 		f.newLine();
 		ArrayList<String> module = new ArrayList<String>();
-		module.add("XXXXXXX");
-		ArrayList<String> grade = new ArrayList<String>();
-		grade.add("A");
+		module.add("1");
+		module.add("2");
+		module.add("3");
+		module.add("4");
 		ArrayList<String> modulename = new ArrayList<String>();
-		modulename.add("ALG3");
-
-		for (int i = 0; i < module.size(); i++) {
-			f.write("||" + module.get(i) + " " + "" + modulename.get(i) + " "
-					+ "" + grade.get(i) + " "
-					+ "                                                ||");
+		modulename.add("AP3");
+		modulename.add("AL3");
+		modulename.add("PSD");
+		modulename.add("IS3");
+		for (int i = 0; i < student.get(id).getGrades().size(); i++) {
+			f.write("||" + module.get(i) + "                       "
+					+ modulename.get(i) + "                   "
+					+ student.get(id).getGrades().get(i).getgrade() + " "
+					+ "               ||");
 			f.newLine();
 		}
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 10; i++) {
 			f.write("||"
-					+ "                             hello                             "
+					+ "                                                               "
 					+ "||");
 			f.newLine();
 		}
 
-		// f.write("===================================================================");
+		f.write("===================================================================");
 
 		f.flush();
 		f.close();
+		
 	}
 
 	public static void importData() {
-		ArrayList<String> name = new ArrayList<String>();
-		ArrayList<String> matric = new ArrayList<String>();
-		ArrayList<String> gender = new ArrayList<String>();
-		ArrayList<String> age = new ArrayList<String>();
+		
+		student = new ArrayList<Student>();
 
-		String csvFile = importDialog();
+		String csvFile = "C:/Users/IanYeo/Documents/student.csv";
+		// importDialog();
 		if (csvFile != null) {
 			BufferedReader br = null;
 			String line = "";
@@ -86,13 +133,28 @@ public class Function {
 
 					// use comma as separator
 					String[] user = line.split(cvsSplitBy);
+					s = new Student(user[0], user[1], user[2], user[3]);
 
-					name.add(user[0]);
-					matric.add(user[1]);
-					gender.add(user[2]);
-					age.add(user[3]);
+					// c = new Course(user[4],user[5],user[6]);
+					ArrayList<Grades> g = new ArrayList<Grades>();
+					g.add(new Grades(user[4].charAt(0)));
+					g.add(new Grades(user[5].charAt(0)));
+					g.add(new Grades(user[6].charAt(0)));
+					g.add(new Grades(user[7].charAt(0)));
+
+					s.setGrades(g);
+
+					student.add(s);
 				}
+				while ((line = br.readLine()) != null) {
 
+					// use comma as separator
+					String[] user = line.split(cvsSplitBy);
+					for (int i = 0; i < student.size(); i++) {
+						c = new Course(user[4], user[5], user[6]);
+						student.get(i).getCourse().add(c);
+					}
+				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -106,44 +168,32 @@ public class Function {
 					}
 				}
 			}
+//			System.out.println("Name" + "		Matric" + "		Age" + "		Gender"
+//					+ "	AP3" + "	ALG3" + "	PSD" + "	IS");
+//			for (int i = 1; i < student.size(); i++) {
+//
+//				System.out.print(student.get(i).getName() + "		");
+//				System.out.print(student.get(i).getMatric() + "		");
+//				System.out.print(student.get(i).getGender() + "		");
+//				System.out.print(student.get(i).getAge() + "	");
+//
+//				alJ = student.get(i).getGrades();
+//
+//				for (int j = 0; j < alJ.size(); j++) {
+//					System.out.print(alJ.get(j).getgrade() + "	");
+//				}
+//
+//				System.out.println("");
+//			}
 
-			System.out.println("Done");
-			for (int i = 0; i < name.size(); i++) {
-				System.out.print(name.get(i) + "	");
-				System.out.print(matric.get(i) + "	");
-				System.out.print(gender.get(i) + "	");
-				System.out.print(age.get(i) + "	\n");
-
-			}
 		}
+
 	}
 
 	public static void exportData() {
-		
-		ArrayList<Student> student = new ArrayList<Student>();
-		ArrayList<Grades> grades = new ArrayList<Grades>();
-		ArrayList<Course> course = new ArrayList<Course>();
-		s = new Student("Name", "Matric", "Gender", "Age");
-		student.add(s);
-		s = new Student("Gene", "123456G", "Male", "22");
-		student.add(s);
-		s = new Student("Ian", "098765I", "Male", "22");
-		student.add(s);
-		s = new Student("Joe", "456789J", "Male", "22");
-		student.add(s);
-		s = new Student("WenBing", "346790W", "Female", "20");
-		student.add(s);
-		s = new Student("YuanHu111i", "124578Y", "Female", "21");
-		student.add(s);
-		//c =new Course("Advance Programming", "AP32013", "AP3");
-		c =new Course("Information System", "IS32013", "IS3");
-		g = new Grades("A");
 
-		for (int i=0; i<student.size(); i++){
-			student.get(i).getCourse().add(c);
-			student.get(i).getGrades().add(g);
-		}
-		
+		// ArrayList<Student> student = new ArrayList<Student>();
+
 		String path = exportDialog();
 
 		if (path != null) {
@@ -155,12 +205,22 @@ public class Function {
 				// creates a FileWriter Object
 				FileWriter writer = new FileWriter(file);
 				// Writes the content to the file
-				for (int i = 0; i < student.size(); i++) {
+				// "Name" + "		Matric" + "		Age" + "		Gender"
+				// + "	AP3" + "	ALG3" + "	PSD" + "	IS");
+				writer.write("Name," + "Matric," + "Age," + "Gender," + "AP3,"
+						+ "ALG3," + "PSD," + "IS," + "\r\n");
+				for (int i = 1; i < student.size(); i++) {
 					// System.out.println(student.get(i).getName());
 					writer.write(student.get(i).getName() + ",");
 					writer.write(student.get(i).getMatric() + ",");
 					writer.write(student.get(i).getGender() + ",");
-					writer.write(student.get(i).getAge() + "\n");
+					writer.write(student.get(i).getAge() + ",");
+					for (int j = 0; j < alJ.size(); j++) {
+						writer.write(alJ.get(j).getgrade() + ",");
+
+					}
+					writer.write("\r\n");
+
 				}
 
 				writer.flush();
@@ -249,6 +309,7 @@ public class Function {
 		System.out.println(studentId);
 		//
 	}
+	
 
 	public static void showMenu() throws IOException {
 		boolean showMenu = true;
@@ -256,7 +317,7 @@ public class Function {
 
 		Scanner s = new Scanner(System.in);
 		System.out
-				.println("Menu:\n1. Mark attendance\n2. Import Attendance \n3. Export Attendance \n4. Transcript\n5. Exit\n\nChoose your options:");
+				.println("Menu:\n1. Export Transcript \n2. Export Data \n3. Export Assignment Grade  \n4. Exit\nChoose your options:");
 
 		try {
 			option = s.nextInt();
@@ -266,18 +327,23 @@ public class Function {
 
 		switch (option) {
 		case 1:
-			markAttendance();
+			importData();
+			int id = selectStudentTranscript();
+			if (id == 0) {
+				for (int g = 1; g < student.size(); g++) {
+					tranScript(g);
+				}
+			} else {
+				tranScript(id);
+			}
 			break;
 		case 2:
-			importData();
+			exportData();
 			break;
 		case 3:
 			exportData();
 			break;
 		case 4:
-			tranScript();
-			break;
-		case 5:
 			showMenu = false;
 			break;
 		}

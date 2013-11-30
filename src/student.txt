@@ -1,0 +1,5 @@
+Gene,lab1,present,lab2,present,lab3,mv
+Ian,lab1,present,lab2,present,lab3,present
+Wen Bing,lab1,present,lab2,present,lab3,present
+Yuan Hui,lab1,present,lab2,present,lab3,present
+Joe,lab1,absent,lab2,present,lab3,present

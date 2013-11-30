@@ -1,0 +1,2 @@
+Alg3,lab1,tut1,pract1,lab2
+psd3,lab2,tut1,pract1,lab1
