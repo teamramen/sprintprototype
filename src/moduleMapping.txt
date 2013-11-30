@@ -1,2 +1,2 @@
-Algorithms,ALG3
-Professional Software Development 3,PSD3
+Algorithms,IT123
+Professional Software Development 3,IT456

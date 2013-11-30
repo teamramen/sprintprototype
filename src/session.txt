@@ -1,5 +1,5 @@
-lab2,123456G,098765I,456789J,346790W,124578Y
+lab2,student1,student2,student3,student4,student5
 lab1,student2,student3,student4,student5,student6
 pract1,student3,student4
 tut1,student5,student6
-tut2,student1,student2,student3,student4,student5
+tut4,student2,student3,student4,student5
