@@ -343,7 +343,7 @@ public class Function {
 			exportData();
 			break;
 		case 3:
-			exportData();
+			exportCourseGrade(student);
 			break;
 		case 4:
 			showMenu = false;
@@ -433,6 +433,77 @@ public static void viewListOfStudent()
 	}
 }
 
+public static void exportCourseGrade(ArrayList<Student> student) {
+	/*s.getCourse().add(new Course("Algorithm", "AL3", "alg"));
+	s.getCourse().add(new Course("Advance Programming", "AP3", "ap"));
+	s.getCourse().add(new Course("Programming language", "PL3", "pl"));
+
+	student.add(s);*/
+	int size = student.get(0).getCourse().size();
+	System.out.println(size);
+
+	Scanner s = new Scanner(System.in);
+
+	System.out.println("Enter student matriculation number: ");
+	String matriculationNo = s.next();
+
+	for (Student stu : student) {
+		if (stu.getMatric().equals(matriculationNo)) {
+			//
+			stu.getCourse().add(new Course("Algorithm", "ALG3", "alg"));
+			stu.getCourse().add(new Course("Advance Programming", "AP3", "ap"));
+			stu.getCourse().add(new Course("Programming language", "PL3", "pl"));
+
+			stu.setAssignment(0, "Assignment 1", "A");
+			stu.setAssignment(0, "Assignment 2", "B");
+
+			stu.setAssignment(1, "Assignment 3", "F");
+
+			stu.setAssignment(2, "Assignment 4", "C");
+			//
+			
+			ArrayList<Course> course = stu.getCourse();
+
+			System.out.println("Select course to export the grades: ");
+
+			for (int i = 0; i < course.size(); i++) {
+				System.out.println((i+1) + ". " + course.get(i).getCoursename());
+			}
+
+			int input = s.nextInt() - 1;
+
+			if (input < course.size() && input >= 0) {
+				//Export the grades as CSV
+				try {
+					ArrayList<Assignment> assignment = stu.getAssignment(input);
+
+					BufferedWriter f = null;
+
+					f = new BufferedWriter(new FileWriter(stu.getMatric() + "-" + course.get(input).getCoursename() + ".csv"));
+
+					if (assignment != null) {
+						for (int i = 0; i < assignment.size(); i++) {
+							f.write(assignment.get(i).getAssignment() + "," + assignment.get(i).getGrade()+ "\n");
+						}
+
+						f.close();
+					}
+					else {
+						System.out.println("No assignment found.");
+					}
+				}
+				catch(Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				System.out.println("Error");
+			}
+
+			break;
+		}
+	}
+}
 public static void editOption()
 {
 	System.out.println("Please select an edit option :\n1. Edit Module Information\n2. Edit Session Information");
