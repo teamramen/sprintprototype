@@ -24,16 +24,35 @@ public class testClass {
 	public static void main(String [] args) throws IOException
 	{
 		int count=0;
-		String username = "maoxiong";
-		System.out.println("Please Login:");
+		String username = "admin";
+		String password = "password";
+
+		String username1 = "lecturer";
+		String password1 = "password";
+
 		Scanner sc = new Scanner(System.in);
-		if (sc.next().equals(username)) {
+
+		System.out.println("Please enter username:");
+		String un = sc.next();
+
+		System.out.println("Please enter password:");
+		String pwd = sc.next();
+
+		if (un.equals(username)&& pwd.equals(password)) {
 			count =1;
 			System.out.println("You have login as Administrator");
-		} else {
+		} 		
+		else if(un.equals(username1)&& pwd.equals(password1)){
+			System.out.println("You have logged as Lecturer");
+			count =2;
+		}
+		else {
 			System.out.println("Wrong Password");
 		}
+
+
 		
+
 		if(count ==1)
 		{
 			int option = -1;
@@ -42,11 +61,20 @@ public class testClass {
 			while(option!=0);
 		}
 		
+		if(count ==2)
+		{
+			int option = -1;
+			do
+				option = showMenu1();
+			while(option!=0);
+		}
+
 	}
 
 	public static int showMenu() throws IOException
 	{
-		
+		System.out.println("Administrator Menu");
+		System.out.println("=============================================");
 		System.out.println("Please select an item:\n1. Export Transcript & Grades\n2. Mark Attendance\n3. Import Attendance \n4. View Attendance \n5. Edit Option \n0. To exit");
 		Scanner sc = new Scanner(System.in);
 		f.importData();
@@ -61,7 +89,7 @@ public class testClass {
 		case 0: System.out.println("Good Bye");
 		return option;
 		case 1:f.showMenu();
-			break;
+		break;
 		case 2: 
 			new Attendance(f.student).markAttendance();
 			break;
@@ -69,8 +97,39 @@ public class testClass {
 			new Attendance(f.student).importAttendance();
 			break;
 		case 4: f.viewListOfStudent();
-			break;
+		break;
 		case 5: f.editOption();
+		break;
+		}
+
+		return option;
+	}
+	
+	public static int showMenu1() throws IOException
+	{	
+		System.out.println("Lecturer Menu");
+		System.out.println("=============================================");
+		System.out.println("Please select an item:\n1. Mark Attendance\n2. View Attendance \n3. Edit Option \n0. To exit");
+		Scanner sc = new Scanner(System.in);
+		f.importData();
+		int option = sc.nextInt();
+		if(option<0 || option>3)
+		{
+			System.out.println("No such option");
+		}
+
+		switch(option)
+		{
+		case 0: System.out.println("Good Bye");
+		return option;
+		case 1:
+			new Attendance(f.student).markAttendance();
+		break;
+		case 2: 
+			f.viewListOfStudent();
+			break;
+		case 3: 
+			f.editOption();
 			break;
 		}
 
